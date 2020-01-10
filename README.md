@@ -1,3 +1,5 @@
+# Alfresco-Share Import Export AddOn (AIO Project - SDK 4.0) 
+ 
 "Import/Export ACP Tool" for Alfresco Share
 ================================
 
@@ -9,38 +11,29 @@ Check out the project if you have not already done so
 
         git clone git://github.com/atolcd/alfresco-share-import-export.git
 
-An Ant build script is provided to build JAR file **OR** AMP files containing the custom files.  
+Run with `./run.sh build_start` or `./run.bat build_start` and verify that it
 
-To build JAR file, run the following command from the base project directory:
+ * Runs Alfresco Content Service (ACS)
+ * Runs Alfresco Share
+ * Runs Alfresco Search Service (ASS)
+ * Runs PostgreSQL database
+ * Deploys the JAR assembled modules
+ 
+All the services of the project are now run as docker containers. The run script offers the next tasks:
 
-        ant dist-jar
-
-If you want to build AMP files, run the following command:
-
-        ant dist-amp
-
-
-Installing the module
----------------------
-This extension is a standard Alfresco Module, so experienced users can skip these steps and proceed as usual.
-
-### 1st method: Installing JAR (recommended)
-1. Stop Alfresco
-2. Copy `share-import-export-X.X.X.jar` into the `/tomcat/shared/lib/` folder of your Alfresco (you might need to create this folder if it does not already exist).
-3. Start Alfresco
-
-
-### 2nd method: Installing AMPs
-1. Stop Alfresco
-2. Use the Alfresco [Module Management Tool](http://wiki.alfresco.com/wiki/Module_Management_Tool) to install the modules in your Alfresco and Share WAR files:
-
-        java -jar alfresco-mmt.jar install import-export-alfresco-vX.X.X.amp $TOMCAT_HOME/webapps/alfresco.war -force
-        java -jar alfresco-mmt.jar install import-export-share-vX.X.X.amp $TOMCAT_HOME/webapps/share.war -force
-
-3. Delete the `$TOMCAT_HOME/webapps/alfresco/` and `$TOMCAT_HOME/webapps/share/` folders.  
-**Caution:** please ensure you do not have unsaved custom files in the webapp folders before deleting.
-4. Start Alfresco
-
+ * `build_start`. Build the whole project, recreate the ACS and Share docker images, start the dockerised environment composed by ACS, Share, ASS and 
+ PostgreSQL and tail the logs of all the containers.
+ * `build_start_it_supported`. Build the whole project including dependencies required for IT execution, recreate the ACS and Share docker images, start the 
+ dockerised environment composed by ACS, Share, ASS and PostgreSQL and tail the logs of all the containers.
+ * `start`. Start the dockerised environment without building the project and tail the logs of all the containers.
+ * `stop`. Stop the dockerised environment.
+ * `purge`. Stop the dockerised container and delete all the persistent data (docker volumes).
+ * `tail`. Tail the logs of all the containers.
+ * `reload_share`. Build the Share module, recreate the Share docker image and restart the Share container.
+ * `reload_acs`. Build the ACS module, recreate the ACS docker image and restart the ACS container.
+ * `build_test`. Build the whole project, recreate the ACS and Share docker images, start the dockerised environment, execute the integration tests from the
+ `integration-tests` module and stop the environment.
+ * `test`. Execute the integration tests (the environment must be already started).
 
 
 Using the module
@@ -58,5 +51,5 @@ Created by: [Julien BERTHOUX] (https://github.com/jberthoux) and [Bertrand FORES
 
 Our company
 ---------------------
-[Atol Conseils et Développements] (http://www.atolcd.com) is Alfresco [Gold Partner] (http://www.alfresco.com/partners/atol)  
+[Atol Conseils et DÃ©veloppements] (http://www.atolcd.com) is Alfresco [Gold Partner] (http://www.alfresco.com/partners/atol)  
 Follow us on twitter [ @atolcd] (https://twitter.com/atolcd)  
