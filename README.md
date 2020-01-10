@@ -9,7 +9,11 @@ Building the module
 -------------------
 Check out the project if you have not already done so 
 
-        git clone git://github.com/atolcd/alfresco-share-import-export.git
+        git clone https://github.com/abhinavmishra14/alfresco-share-import-export.git
+        
+Switch to SDK 4.1 branch: 
+          
+        git fetch && git checkout sdk4.1 
 
 Run with `./run.sh build_start` or `./run.bat build_start` and verify that it
 
