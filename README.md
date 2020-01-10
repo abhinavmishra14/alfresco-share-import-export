@@ -36,6 +36,61 @@ All the services of the project are now run as docker containers. The run script
  * `test`. Execute the integration tests (the environment must be already started).
 
 
+Installing the module
+---------------------
+
+####Installing Alfresco Platform module:
+
+1- Navigate to parent pom.xml
+2- Execute maven command: `mvn clean install`
+3- You can find the 'alfresco-share-import-export-platform' jar file at this path: /alfresco-share-import-export/alfresco-share-import-export-platform-docker/target/extensions/alfresco-share-import-export-platform-1.0-SNAPSHOT.jar
+4- Stop the alfresco container 
+     
+    e.g.: docker-compose -f ./docker-compose.yml kill alfresco-share-import-export-acs
+          docker-compose -f ./docker-compose.yml rm -f alfresco-share-import-export-acs
+   
+5- Copy the jar file to $TOMCAT_DIR/webapps/alfresco/WEB-INF/lib/
+
+    Get container name or short container id:
+     - `docker ps`
+    Get full container id:
+	 - `docker inspect -f '{{.Id}}' CONTAINER_ID`
+	 Copy file:
+	 - `docker cp localFile FULLCONTAINER_ID:pathOnContainer`
+	
+	 Example:
+	 - `docker cp ./alfresco-share-import-export/alfresco-share-import-export-platform-docker/target/extensions/alfresco-share-import-export-platform-1.0-SNAPSHOT.jar ac23e51fd0b5c4cc11a12133ceea16d603e7f105d8d39873c75d7cfdd5942e40:/usr/local/tomcat/webapps/alfresco/WEB-INF/lib/`
+
+6- Start the alfresco container
+   
+    e.g.: docker-compose -f ./docker-compose.yml up --build -d alfresco-share-import-export-acs
+    
+####Installing Share module:
+
+1- Navigate to parent pom.xml
+2- Execute maven command: `mvn clean install`
+3- You can find the 'alfresco-share-import-export-share' jar file at this path: /alfresco-share-import-export/alfresco-share-import-export-share-docker/target/extensions/alfresco-share-import-export-share-1.0-SNAPSHOT.jar
+4- Stop the share container 
+      
+    e.g.: docker-compose -f ./docker-compose.yml kill alfresco-share-import-export-share
+          docker-compose -f ./docker-compose.yml rm -f alfresco-share-import-export-share
+   
+5- Copy the jar file to $TOMCAT_DIR/webapps/alfresco/WEB-INF/lib/
+
+	 Get container name or short container id:
+     - `docker ps`
+    Get full container id:
+	 - `docker inspect -f '{{.Id}}' CONTAINER_ID`
+	 Copy file:
+	 - `docker cp localFile FULLCONTAINER_ID:pathOnContainer`
+	
+	 Example:
+	 - `docker cp ./alfresco-share-import-export/alfresco-share-import-export-share-docker/target/extensions/alfresco-share-import-export-share-1.0-SNAPSHOT.jar bc23e51frfr5c4cc11a12133ceea16d603e7f105d8d39873c75d7cfdd5942456:/usr/local/tomcat/webapps/share/WEB-INF/lib/`
+
+6- Start the share container
+   
+    e.g.: docker-compose -f ./docker-compose.yml up --build -d alfresco-share-import-export-share
+
 Using the module
 ---------------------
 Go to the Share Admin console.  
